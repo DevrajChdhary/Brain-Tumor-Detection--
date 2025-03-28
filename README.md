@@ -35,11 +35,10 @@
 <h3>Running the Model</h3>
 <ol>
     <li><strong>Preprocess the Data:</strong> Ensure MRI images are stored in the correct directory structure.</li>
-    <li><strong>Train the Model:</strong> Execute the following script to train the ANN model:<br>
-        <code>python train.py</code>
+    <li><strong>Train the Model</strong>
     </li>
     <li><strong>Run the Web Application:</strong><br>
-        <code>streamlit run app.py</code>
+        <code> Python  Webapp.py</code>
     </li>
 </ol>
 
@@ -47,9 +46,6 @@
 <ul>
     <li><strong>Google Cloud Platform (GCP):</strong> Deploy using Cloud Run or App Engine.</li>
     <li><strong>AWS:</strong> Use EC2, Lambda, or SageMaker for model hosting.</li>
-    <li><strong>Microsoft Azure:</strong> Deploy via Azure Web Apps or Azure Functions.</li>
-    <li><strong>Render / Railway / Heroku:</strong> Simple and free-tier options for hosting the Streamlit app.</li>
-    <li><strong>Hugging Face Spaces:</strong> Deploy the app for free with Streamlit.</li>
 </ul>
 
 <h2>Performance Metrics</h2>
@@ -68,9 +64,3 @@
     <li>Enhance dataset diversity for better generalization.</li>
     <li>Deploy the application as a cloud-based service for wider accessibility.</li>
 </ul>
-
-<h2>Contributors</h2>
-<p><strong>Devraj Choudhary</strong> (<a href="https://github.com/DevrajChdhary">GitHub</a>)</p>
-
-<h2>License</h2>
-<p>This project is open-source and available under the MIT License.</p>
