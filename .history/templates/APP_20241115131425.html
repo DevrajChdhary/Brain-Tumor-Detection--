@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Neuro Detect - Advanced Brain Tumor Detection</title>
+
+    <link rel="icon" href="https://raw.githubusercontent.com/Aryansin1234/Brain-Tumor-Detection-EfficientNet/refs/heads/main/2890580-artificialintelligence9_101980.ico" type="image/x-icon">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #5821b0, #a76ded);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .neumorph {
+            background: #f0f0f0;
+            box-shadow: 8px 8px 16px #d1d1d1, -8px -8px 16px #ffffff;
+            border-radius: 20px;
+        }
+
+        .flip-card {
+            perspective: 1000px;
+            height: 400px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .flip-card-back {
+            transform: rotateY(180deg);
+            overflow-y: auto;
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* New styles for animations and scroll-to-top button */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(88, 33, 176, 0.8);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .scroll-to-top:hover {
+            background-color: rgba(88, 33, 176, 1);
+            transform: scale(1.1);
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Typing animation for hero section */
+        .typing-animation {
+            overflow: hidden;
+            border-right: 0.15em solid #5821b0;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: 0.15em;
+            animation: 
+                typing 3.5s steps(40, end),
+                blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #5821b0 }
+        }
+
+        .nav-link.active {
+            color: #5821b0; /* Updated to match new gradient color */
+            font-weight: bold;
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f0f0f0;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #5821b0;
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a76ded;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .text-6xl {
+                font-size: 2.5rem;
+            }
+            .text-3xl {
+                font-size: 1.75rem;
+            }
+            .text-2xl {
+                font-size: 1.5rem;
+            }
+            .text-xl {
+                font-size: 1.25rem;
+            }
+            .text-lg {
+                font-size: 1rem;
+            }
+            .p-10 {
+                padding: 2.5rem;
+            }
+            .py-20 {
+                padding-top: 5rem;
+                padding-bottom: 5rem;
+            }
+            .mt-20 {
+                margin-top: 5rem;
+            }
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .content {
+            flex: 1 0 auto;
+        }
+        .footer {
+            flex-shrink: 0;
+        }
+        .footer {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .footer p {
+            margin: 0;
+        
+                    /* Custom Scrollbar Styles */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #5821b0 #f0f0f0;
+        }
+
+        *::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        *::-webkit-scrollbar-track {
+            background: #f0f0f0;
+        }
+
+        *::-webkit-scrollbar-thumb {
+            background-color: #5821b0;
+            border-radius: 6px;
+            border: 3px solid #f0f0f0;
+        }
+
+        *::-webkit-scrollbar-thumb:hover {
+            background-color: #a76ded;
+        }
+
+        /* For Firefox */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #5821b0 #f0f0f0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            /* ... (existing responsive styles) ... */
+
+            /* Adjust scrollbar for mobile */
+            *::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            *::-webkit-scrollbar-thumb {
+                border-width: 1px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <nav class="fixed w-full bg-white bg-opacity-90 shadow-md z-50">
+        <div class="container mx-auto px-4 sm:px-6 py-3">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-xl sm:text-2xl font-bold gradient-text">Neuro Detect</a>
+                <div class="hidden md:flex space-x-4">
+                    <a id="nav-about" href="#about" class="nav-link hover:text-purple-500 transition">About</a>
+                    <a id="nav-tumors" href="#tumors" class="nav-link hover:text-purple-500 transition">Tumor Types</a>
+                    <a id="nav-detection" href="#detection" class="nav-link hover:text-purple-500 transition">Detection</a>
+                    <a id="nav-model" href="#model" class="nav-link hover:text-purple-500 transition">Our Model</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button class="outline-none mobile-menu-button">
+                        <svg class="w-6 h-6 text-gray-500 hover:text-purple-500"
+                            x-show="!showMenu"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden mobile-menu">
+            <ul class="">
+                <li><a href="#intro" class="block text-sm px-2 py-4 hover:bg-purple-500 hover:text-white transition duration-300">Home</a></li>
+                <li><a href="#about" class="block text-sm px-2 py-4 hover:bg-purple-500 hover:text-white transition duration-300">About</a></li>
+                <li><a href="#tumors" class="block text-sm px-2 py-4 hover:bg-purple-500 hover:text-white transition duration-300">Tumor Types</a></li>
+                <li><a href="#detection" class="block text-sm px-2 py-4 hover:bg-purple-500 hover:text-white transition duration-300">Detection</a></li>
+                <li><a href="#model" class="block text-sm px-2 py-4 hover:bg-purple-500 hover:text-white transition duration-300">Our Model</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 sm:px-6 space-y-12 sm:space-y-20 pt-16 sm:pt-20">
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-screen flex items-center justify-center relative">
+            <canvas id="dna-animation" class="absolute top-0 left-0 w-full h-full"></canvas>
+            <div class="text-center relative z-10 px-4 sm:px-0">
+                <h1 class="text-4xl sm:text-6xl font-bold mb-4 sm:mb-5 animate-float"><span class="gradient-text">AI-Powered Brain Tumor Detection</span>🧠</h1>
+                <p class="text-xl sm:text-2xl mb-6 sm:mb-8">Harness the power of artificial intelligence for quick and accurate brain tumor analysis.</p>
+                <a href="#detection" class="bg-gradient-to-r from-purple-500 to-teal-400 text-white font-semibold rounded-full py-2 sm:py-3 px-6 sm:px-8 hover:from-purple-600 hover:to-teal-500 transition duration-300 text-base sm:text-lg">Start Detection</a>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section id="about" class="neumorph p-6 sm:p-10">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 fade-in"><span class="gradient-text">About Neuro Detect</span>📊</h2>
+            <p class="text-base sm:text-lg mb-4 fade-in">Neuro Detect leverages advanced deep learning technology, specifically designed for analyzing brain MRI scans, providing fast and accurate tumor classification.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+                <div class="text-center fade-in">
+                    <i class="fas fa-brain text-4xl text-purple-500 mb-4 animate-float"></i>
+                    <h3 class="text-xl font-semibold mb-2">Advanced AI</h3>
+                    <p>Built with EfficientNetB3, our AI model offers cutting-edge feature extraction for superior tumor detection and classification.</p>
+                </div>
+                <div class="text-center fade-in">
+                    <i class="fas fa-tachometer-alt text-4xl text-teal-500 mb-4 animate-float"></i>
+                    <h3 class="text-xl font-semibold mb-2">Instant Analysis</h3>
+                    <p>Receive MRI scan results in seconds, delivering real-time insights for quick decision-making and diagnosis.</p>
+                </div>
+                <div class="text-center fade-in">
+                    <i class="fas fa-chart-line text-4xl text-purple-500 mb-4 animate-float"></i>
+                    <h3 class="text-xl font-semibold mb-2">Exceptional Accuracy</h3>
+                    <p>With an accuracy rate of 99.85%, Neuro Detect ensures reliable and precise classification across multiple tumor types.</p>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- Tumor Types Section -->
+        <section id="tumors" class="py-12 sm:py-20">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 sm:mb-10 text-center fade-in"><span class="gradient-text">Types of Brain Tumors</span>🧬</h2>
+            <p class="text-base sm:text-lg mb-6 sm:mb-10 text-center fade-in">Understanding the different types of brain tumors is crucial for accurate diagnosis and treatment. Here are some of the most common types:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <div class="flip-card fade-in">
+            <div class="flip-card-inner neumorph">
+                <div class="flip-card-front bg-gradient-to-br from-purple-100 to-teal-100 p-4">
+                    <div class="w-24 h-24 bg-purple-500 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-dna text-4xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold mt-3 text-purple-700">Glioma</h3>
+                    <p class="text-center text-purple-800">Tumors that occur in the brain and spinal cord, originating in glial cells.</p>
+                </div>
+                <div class="flip-card-back bg-purple-100 p-4">
+                    <h3 class="text-2xl font-semibold mb-2 text-purple-700">Glioma</h3>
+                    <p class="text-purple-800 mb-4">Gliomas are tumors that develop from glial cells in the brain and spinal cord. They can affect brain function and be life-threatening depending on their location and growth rate.</p>
+                    <h4 class="font-semibold mt-2 text-purple-700">Common Symptoms:</h4>
+                    <ul class="list-disc list-inside text-purple-800">
+                        <li>Headaches</li>
+                        <li>Seizures</li>
+                        <li>Vision problems</li>
+                        <li>Personality changes</li>
+                    </ul>
+                    <a href="https://my.clevelandclinic.org/health/diseases/21969-glioma" class="mt-4 inline-block bg-purple-500 text-white py-2 px-4 rounded-full hover:bg-purple-600 transition duration-300">Learn More</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="flip-card fade-in">
+            <div class="flip-card-inner neumorph">
+                <div class="flip-card-front bg-gradient-to-br from-teal-100 to-purple-100 p-4">
+                    <div class="w-24 h-24 bg-teal-500 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-brain text-4xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-2 text-teal-700">Meningioma</h3>
+                    <p class="text-center text-teal-800">Tumors that form on membranes covering the brain and spinal cord.</p>
+                </div>
+                <div class="flip-card-back bg-teal-100 p-4">
+                    <h3 class="text-2xl font-semibold mt-3 text-teal-700">Meningioma</h3>
+                    <p class="text-teal-800 mb-4">Meningiomas are tumors that arise from the meninges, the membranes surrounding the brain and spinal cord. They are often slow-growing and may not cause symptoms for years.</p>
+                    <h4 class="font-semibold mt-2 text-teal-700">Common Symptoms:</h4>
+                    <ul class="list-disc list-inside text-teal-800">
+                        <li>Headaches</li>
+                        <li>Hearing loss or ringing in the ears</li>
+                        <li>Vision problems</li>
+                        <li>Memory loss</li>
+                    </ul>
+                    <a href="https://my.clevelandclinic.org/health/diseases/17858-meningioma" class="mt-4 inline-block bg-purple-500 text-white py-2 px-4 rounded-full hover:bg-purple-600 transition duration-300">Learn More</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="flip-card fade-in">
+            <div class="flip-card-inner neumorph">
+                <div class="flip-card-front bg-gradient-to-br from-purple-100 to-teal-100 p-4">
+                    <div class="w-24 h-24 bg-purple-500 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-microscope text-4xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-2 text-purple-700">Pituitary Tumor</h3>
+                    <p class="text-center text-purple-800">Tumors that develop in the pituitary gland at the base of the brain.</p>
+                </div>
+                <div class="flip-card-back bg-purple-100 p-4">
+                    <h3 class="text-2xl font-semibold mt-4 text-purple-700">Pituitary Tumor</h3>
+                    <p class="text-purple-800 mb-4">Pituitary tumors are abnormal growths that develop in the pituitary gland. They can affect hormone production and cause various endocrine system disorders.</p>
+                    <h4 class="font-semibold mt-2 text-purple-700">Common Symptoms:</h4>
+                    <ul class="list-disc list-inside text-purple-800">
+                        <li>Headaches</li>
+                        <li>Vision problems</li>
+                        <li>Hormonal imbalances</li>
+                        <li>Fatigue</li>
+                    </ul>
+                    <a href="https://my.clevelandclinic.org/health/diseases/15328-pituitary-adenomas" class="mt-4 inline-block bg-purple-500 text-white py-2 px-4 rounded-full hover:bg-purple-600 transition duration-300">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+        <!-- Detection Section -->
+        <section id="detection" class="neumorph p-6 sm:p-10">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 fade-in"><span class="gradient-text">Detection Process</span>🔍</h2>
+            <p class="text-base sm:text-lg mb-4 fade-in">Our detection process is simple and efficient. Upload your MRI scan, and our AI model will analyze it to provide a detailed report on the presence and type of brain tumor.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+                <div class="fade-in">
+                    <h3 class="text-2xl font-semibold mb-3"><i class="fas fa-upload mr-2"></i>Upload MRI Scan</h3>
+                    <p class="text-gray-700">Upload your MRI scan in a supported format. Our system supports various file types, ensuring compatibility and ease of use.</p>
+                </div>
+                <div class="fade-in">
+                    <h3 class="text-2xl font-semibold mb-3"><i class="fas fa-cogs mr-2"></i>AI Analysis</h3>
+                    <p class="text-gray-700">Our advanced AI model analyzes the MRI scan, identifying and classifying any brain tumors with high accuracy.</p>
+                </div>
+                <div class="fade-in">
+                    <h3 class="text-2xl font-semibold mb-3"><i class="fas fa-file-alt mr-2"></i>Receive Prediction</h3>
+                    <p class="text-gray-700">Get a detailed prediction report that includes the percentage probability and the class of the detected brain tumor.</p>
+                </div>
+                <div class="fade-in">
+                    <h3 class="text-2xl font-semibold mb-3"><i class="fas fa-user-md mr-2"></i>Consult a Specialist</h3>
+                    <p class="text-gray-700">Consult with a healthcare specialist to discuss the results and plan the next steps for treatment and care.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detection Form Section -->
+        <section id="detection-form" class="py-10 sm:py-15">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 sm:mb-10 text-center fade-in"><span class="gradient-text">Tumor Detection</span>🔬</h2>
+            <div class="max-w-4xl mx-auto">
+                <div class="neumorph p-4 sm:p-6 md:p-10 mb-6 sm:mb-10 bg-gradient-to-br from-purple-100 to-teal-100 fade-in">
+                    <form id="upload-form" class="flex flex-col items-center">
+                        <div id="drop-area" class="w-full cursor-pointer border-4 border-dashed border-gray-300 rounded-lg p-4 sm:p-10 text-center hover:border-purple-500 transition duration-300 bg-white bg-opacity-50">
+                            <i class="fas fa-cloud-upload-alt text-4xl sm:text-6xl text-purple-500 mb-2 sm:mb-4"></i>
+                            <p class="text-lg sm:text-xl text-gray-600 mb-2">Drag and drop your MRI scan here 📁</p>
+                            <p class="text-base sm:text-lg text-gray-500 mb-2 sm:mb-4">or</p>
+                            <label for="file-input" class="px-4 py-2 sm:px-6 sm:py-3 bg-purple-500 text-white rounded-full hover:bg-purple-600 transition duration-300 cursor-pointer text-sm sm:text-base inline-block">
+                                <i class="fas fa-file-medical mr-2"></i> Choose File
+                            </label>
+                            <input type="file" id="file-input" class="hidden" accept="image/*">
+                        </div>
+                    </form>
+                </div>
+                <div id="image-preview-container" class="hidden mb-10 flex justify-center fade-in">
+                    <div class="relative">
+                        <img id="image-preview" src="#" alt="Uploaded MRI scan" class="max-w-full h-auto rounded-lg shadow-lg">
+                        <button id="remove-image" class="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition duration-300">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <button id="process-btn" class="w-full bg-gradient-to-r from-purple-500 to-teal-400 text-white font-semibold rounded-full py-4 px-8 hover:from-purple-600 hover:to-teal-500 transition duration-300 flex items-center justify-center text-xl fade-in">
+                    <i class="fas fa-brain mr-3 text-2xl"></i> Analyze Scan
+                </button>
+                <div id="loading-spinner" class="hidden mt-8 text-center fade-in">
+                    <div class="inline-block animate-spin rounded-full h-16 w-16 border-t-4 border-purple-500"></div>
+                    <p class="mt-4 text-xl text-gray-700">Analyzing your scan... 🧠💻</p>
+                </div>
+                <div id="results" class="mt-10 hidden fade-in">
+                    <h3 class="text-2xl font-semibold mb-6 gradient-text text-center">Analysis Results 📊</h3>
+                    <div class="neumorph p-8 bg-gradient-to-br from-purple-100 to-teal-100">
+                        <canvas id="prediction-chart"></canvas>
+                    </div>
+                    <p id="message-preview" class="text-xl mt-6 text-center font-semibold text-gray-700"></p>
+                </div>
+            </div>
+        </section>
+        
+
+        <!-- Model Section -->
+        <section id="model" class="neumorph p-6 sm:p-10">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 fade-in"><span class="gradient-text">Our AI Model </span>🤖</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 sm:mt-10">
+                <div class="fade-in">
+                    <h3 class="text-2xl font-semibold mb-3"><i class="fas fa-database mr-2"></i>Dataset</h3>
+                    <p class="text-gray-700">The model was trained on 7,023 MRI images, categorized into four classes: Glioma (1621 images), Meningioma (1645 images), Pituitary Tumor (1757 images), and No Tumor (2000 images). This balanced and diverse dataset enhances the model's generalizability.</p>
+                </div>
+                <div class="fade-in">
+                    <h3 class="text-2xl font-semibold mb-3"><i class="fas fa-cogs mr-2"></i>Architecture</h3>
+                    <p class="text-gray-700">Our architecture is based on EfficientNetB3, a state-of-the-art convolutional neural network, optimized for feature extraction. We utilize Batch Normalization for stable training, Dense layers with L1/L2 regularization to reduce overfitting, and Dropout layers for further regularization. The final Softmax layer outputs predictions across the four tumor categories.</p>
+                </div>
+                <div class="fade-in">
+                    <h3 class="text-2xl font-semibold mb-3"><i class="fas fa-chart-line mr-2"></i>Performance</h3>
+                    <p class="text-gray-700">The model achieved an accuracy of 99.85% on test data. Precision and recall were near-perfect across all classes, resulting in a weighted F1-score of 0.998. The confusion matrix shows minimal misclassifications, highlighting the model's robustness and reliability in detecting brain tumors.</p>
+                </div>
+                <div class="fade-in">
+                    <h3 class="text-2xl font-semibold mb-3"><i class="fas fa-tools mr-2"></i>Advanced Techniques</h3>
+                    <p class="text-gray-700">We incorporated advanced data augmentation techniques (rotation, zoom, shift) to improve the model's ability to generalize across variations in the dataset. The model is further optimized using early stopping, ensuring training halts at the optimal point to prevent overfitting.</p>
+                </div>
+                <div class="fade-in">
+                    <h3 class="text-2xl font-semibold mb-3"><i class="fas fa-tachometer-alt mr-2"></i>Evaluation Metrics</h3>
+                    <p class="text-gray-700">Performance was assessed using precision, recall, F1-score, and specificity. The weighted precision and recall were 0.998, with individual class F1-scores ranging from 0.996 to 1.000. Specificity was 100% for three of the four classes, ensuring high reliability in detecting true negatives.</p>
+                </div>
+                <div class="fade-in">
+                    <h3 class="text-2xl font-semibold mb-3"><i class="fas fa-rocket mr-2"></i>Commitment to Innovation</h3>
+                    <p class="text-gray-700">Our focus is on leveraging the latest advancements in technology and best practices to deliver efficient solutions. We continuously explore new methodologies and tools to enhance our development processes and ensure top-notch results for our projects.</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Developer Section -->
+        <section id="developer" class="neumorph p-6 sm:p-10 mt-10 sm:mt-20">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 fade-in text-center">
+                <span class="gradient-text">Meet the Developer</span>👨‍💻
+            </h2>
+            <div class="flex flex-col items-center justify-center">
+                <div class="w-full sm:w-4/5 md:w-3/4 lg:w-2/3 xl:w-1/2 bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-500 hover:scale-105 hover:shadow-2xl">
+                    <div class="absolute inset-0 bg-gradient-to-r from-purple-500 to-teal-400 opacity-30"></div>
+                    <div class="relative p-4 sm:p-6 text-center">
+                        <div class="flex flex-col sm:flex-row items-center">
+                            <div class="relative w-24 h-24 sm:w-32 sm:h-32 mb-4 sm:mb-0 sm:mr-6">
+                                <img src="https://media.licdn.com/dms/image/v2/D4D03AQH3iWlcTrRR5g/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1700149293716?e=1733356800&v=beta&t=YWyjNX3rLzypeDtbwWMpy09R3tZkzcRScYiI7G3N7BU" 
+                                    alt="Aryan's Profile Picture" 
+                                    class="w-full h-full rounded-full border-4 border-white shadow-lg">
+                            <div class="absolute inset-0 rounded-full border-4 border-white animate-pulse"></div>
+                        </div>
+                        <div class="flex-1">
+                        <h3 class="text-xl sm:text-2xl font-semibold mb-2">Aryan</h3>
+                        <p class="text-sm sm:text-base mb-4">I am a DevOps enthusiast with a passion for integrating development and operations to streamline workflows. I created the deep learning model for brain tumor detection, developed this webpage, and Dockerized the application. Using Terraform and AWS, I deployed the entire solution to the cloud, ensuring scalability and reliability.</p>
+                        <a href="https://www.linkedin.com/in/aryansingh1312" 
+                           class="inline-block bg-gradient-to-r from-purple-500 to-teal-400 text-white font-semibold rounded-full py-2 px-4 hover:from-purple-600 hover:to-teal-500 transition duration-300 text-sm sm:text-base">
+                            Connect on LinkedIn
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Scroll to top button -->
+    <div class="scroll-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <footer class="footer bg-gray-800 text-white py-6 sm:py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm sm:text-base">&copy; <span id="current-year"></span> Neuro Detect. All rights reserved.</p>
+            <div class="mt-4 flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
+                <a href="mailto:aryansin2468@gmail.com" class="text-sm sm:text-base hover:text-purple-400 transition-colors duration-300">
+                    <i class="fa fa-envelope mr-2"></i>Contact Us
+                </a>
+                <a href="https://www.linkedin.com/in/aryansingh1312" target="_blank" rel="noopener noreferrer" class="text-sm sm:text-base hover:text-purple-400 transition-colors duration-300">
+                    <i class="fab fa-linkedin mr-2"></i>LinkedIn
+                </a>
+                <a href="https://github.com/Aryansin1234" target="_blank" rel="noopener noreferrer" class="text-sm sm:text-base hover:text-purple-400 transition-colors duration-300">
+                    <i class="fab fa-github mr-2"></i>GitHub
+                </a>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const mobileMenu = document.querySelector('.mobile-menu');
+    
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    
+        // Drag and drop functionality
+        const dropArea = document.getElementById('drop-area');
+        const fileInput = document.getElementById('file-input');
+        const imagePreviewContainer = document.getElementById('image-preview-container');
+        const imagePreview = document.getElementById('image-preview');
+        const removeImageBtn = document.getElementById('remove-image');
+        let currentFile = null; // To store the current file
+    
+        // Prevent default behavior for drag and drop events
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+        });
+    
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log(`Event: ${e.type}`);
+        }
+    
+        // Highlight drop area on drag enter and over
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false);
+        });
+    
+        // Unhighlight drop area on drag leave and drop
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false);
+        });
+    
+        function highlight() {
+            console.log('Highlight drop area');
+            dropArea.classList.add('border-purple-500', 'bg-purple-100');
+        }
+    
+        function unhighlight() {
+            console.log('Unhighlight drop area');
+            dropArea.classList.remove('border-purple-500', 'bg-purple-100');
+        }
+    
+        // Handle dropped files
+        dropArea.addEventListener('drop', handleDrop, false);
+    
+        function handleDrop(e) {
+            console.log('File dropped');
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        }
+    
+        // Handle selected files
+        fileInput.addEventListener('change', function() {
+            console.log('File selected');
+            handleFiles(this.files);
+        });
+    
+        function handleFiles(files) {
+            if (files.length) {
+                const file = files[0];
+                console.log('Handling file:', file);
+                if (file.type.startsWith('image/')) {
+                    currentFile = file; // Store the current file
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        console.log('File read successfully:', e.target.result);
+                        imagePreview.src = e.target.result;
+                        imagePreviewContainer.classList.remove('hidden');
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    alert('Please upload an image file.');
+                }
+            }
+        }
+    
+        // Remove image button
+        removeImageBtn.addEventListener('click', function() {
+            imagePreview.src = '#';
+            imagePreviewContainer.classList.add('hidden');
+            fileInput.value = '';
+            currentFile = null; // Reset the current file
+        });
+    
+        // Process button click
+        const processBtn = document.getElementById('process-btn');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const results = document.getElementById('results');
+        const messagePreview = document.getElementById('message-preview');
+        let chartInstance = null;
+    
+        processBtn.addEventListener('click', function() {
+            if (!currentFile) {
+                alert('Please upload an image before analyzing.');
+                return;
+            }
+    
+            this.disabled = true;
+            loadingSpinner.classList.remove('hidden');
+            results.classList.add('hidden');
+    
+            const formData = new FormData();
+            formData.append('file', currentFile);
+    
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const ctx = document.getElementById('prediction-chart').getContext('2d');
+    
+                // Destroy the previous chart instance if it exists
+                if (chartInstance) {
+                    chartInstance.destroy();
+                }
+    
+                chartInstance = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Glioma', 'Meningioma', 'Pituitary', 'No Tumor'],
+                        datasets: [{
+                            data: [
+                                data.probabilities.glioma,
+                                data.probabilities.meningioma,
+                                data.probabilities.pituitary,
+                                data.probabilities.notumor
+                            ],
+                            backgroundColor: [
+                                'rgba(88, 33, 176, 0.8)',
+                                'rgba(75, 192, 192, 0.8)',
+                                'rgba(255, 206, 86, 0.8)',
+                                'rgba(153, 102, 255, 0.8)'
+                            ],
+                            borderColor: [
+                                'rgba(88, 33, 176, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(153, 102, 255, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Tumor Classification Results'
+                            }
+                        }
+                    }
+                });
+    
+                messagePreview.innerHTML = data.message;
+                results.classList.remove('hidden');
+                this.disabled = false;
+                loadingSpinner.classList.add('hidden');
+    
+                // Reset the file input and image preview for the next prediction
+                fileInput.value = '';
+                imagePreview.src = '#';
+                imagePreviewContainer.classList.add('hidden');
+                currentFile = null; // Reset the current file
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while processing the image.');
+                this.disabled = false;
+                loadingSpinner.classList.add('hidden');
+            });
+        });
+    
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    
+        // Update copyright year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    
+        // Neural network background animation
+        const canvas = document.getElementById('dna-animation');
+        const ctx = canvas.getContext('2d');
+    
+        let particles = [];
+        const numParticles = 100;
+    
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+    
+        class Particle {
+            constructor(y) {
+                this.x = Math.random() * canvas.width;
+                this.y = y;
+                this.radius = Math.random() * 2 + 1;
+                this.baseX = this.x;
+                this.speed = (Math.random() * 2) + 1;
+            }
+    
+            update() {
+                this.x = this.baseX + Math.sin(this.y * 0.02) * 50;
+                this.y -= this.speed;
+                if (this.y < 0) {
+                    this.y = canvas.height;
+                }
+            }
+    
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(88, 33, 176, 0.7)';
+                ctx.fill();
+            }
+        }
+    
+        function init() {
+            particles = [];
+            for (let i = 0; i < numParticles; i++) {
+                particles.push(new Particle(i * (canvas.height / numParticles)));
+            }
+        }
+    
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+    
+        // Debounce function
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+    
+        // Resize event handler
+        const handleResize = debounce(() => {
+            resizeCanvas();
+            init();
+        }, 250);
+    
+        // Initial setup
+        resizeCanvas();
+        init();
+        animate();
+    
+        // Add event listener for window resize
+        window.addEventListener('resize', handleResize);
+
+        // New JavaScript for animations and scroll-to-top functionality
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+
+        function handleScrollAnimations() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach(el => {
+                if (isElementInViewport(el)) {
+                    el.classList.add('visible');
+                }
+            });
+
+            const scrollToTopButton = document.querySelector('.scroll-to-top');
+            if (window.pageYOffset > 300) {
+                scrollToTopButton.classList.add('visible');
+            } else {
+                scrollToTopButton.classList.remove('visible');
+            }
+        }
+
+        window.addEventListener('scroll', handleScrollAnimations);
+        window.addEventListener('load', handleScrollAnimations);
+
+        const scrollToTopButton = document.querySelector('.scroll-to-top');
+        scrollToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Trigger initial animations
+        handleScrollAnimations();
+
+        // Navigation highlight
+        const sections = document.querySelectorAll("section[id]");
+        const navLinks = document.querySelectorAll(".nav-link");
+
+        function highlightNavigation() {
+            let scrollY = window.pageYOffset;
+
+            sections.forEach(current => {
+                const sectionHeight = current.offsetHeight;
+                const sectionTop = current.offsetTop - 100; // Adjust this value based on your layout
+                const sectionId = current.getAttribute("id");
+
+                if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                    navLinks.forEach(link => {
+                        link.classList.remove("active");
+                        if (link.getAttribute("href") === "#" + sectionId) {
+                            link.classList.add("active");
+                        }
+                    });
+                }
+            });
+        }
+
+        window.addEventListener("scroll", highlightNavigation);
+        window.addEventListener("load", highlightNavigation);
+
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+
+    </script>
+</body>
+</html>
