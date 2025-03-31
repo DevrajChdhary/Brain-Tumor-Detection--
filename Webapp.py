@@ -71,14 +71,15 @@ def upload_file():
 
         # Return the prediction probabilities and class labels
         return jsonify({
-            'message': f"Analysis complete. {predicted_class} with {confidence_percentage:.2f}% confidence",
-            'probabilities': {
-                'glioma': probabilities[0] * 100,
-                'meningioma': probabilities[1] * 100,
-                'notumor': probabilities[2] * 100,
-                'pituitary': probabilities[3] * 100
+        'message': f"Analysis complete. {predicted_class} with {float(confidence_percentage):.2f}% confidence",
+        'probabilities': {
+            'glioma': float(probabilities[0]) * 100,
+            'meningioma': float(probabilities[1]) * 100,
+            'notumor': float(probabilities[2]) * 100,
+            'pituitary': float(probabilities[3]) * 100
             }
         })
+
     else:
         return jsonify({'error': 'Allowed file types are png, jpg, jpeg, gif'}), 400
 if __name__ == '__main__':
