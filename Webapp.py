@@ -3,9 +3,9 @@ from werkzeug.utils import secure_filename
 import os
 import numpy as np
 import cv2
-from tensorflow.keras.models import load_model
+from keras.models import load_model
 import tensorflow as tf
-from tensorflow.keras.preprocessing.image import img_to_array
+from keras.utils import img_to_array
 from flask import send_from_directory
 
 
